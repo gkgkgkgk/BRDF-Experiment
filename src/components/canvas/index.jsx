@@ -1,4 +1,5 @@
 import { Stage, Graphics } from "@pixi/react";
+import { PI_2 } from "pixi.js";
 import { useState, useEffect, useCallback } from "react";
 
 const Canvas = (props) => {
@@ -98,14 +99,14 @@ const Canvas = (props) => {
 
         const angle = Math.atan2(y2 - y1, x2 - x1);
         const wallRotationRad = ((props.wallRotation) * Math.PI) / 180;
-        const newAngle = angle + wallRotationRad;
+        const newAngle = (angle + 2.0 * wallRotationRad);
 
         console.log(angle / Math.PI * 180, props.wallRotation, newAngle / Math.PI * 180)
 
         let dx = scale * Math.cos(newAngle);
         let dy = scale * Math.sin(newAngle);
 
-        g.moveTo(x1 - dx, y1 + dy);
+        g.moveTo(x2 - dx, y2 + dy);
         g.lineTo(x2, y2);
 
         g.lineStyle(0,0xfa1f02,1);
