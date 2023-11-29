@@ -10,7 +10,7 @@ const Slider = ({ min, max, step, setValue }) => {
 
     return (
         <div className='slider'>
-            <p>Adjust wall angle: {value}°</p>
+            <p>Wall angle: {value}°</p>
             <input 
                 type="range" 
                 min={min} 

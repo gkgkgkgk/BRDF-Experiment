@@ -109,6 +109,8 @@ const Canvas = (props) => {
         g.moveTo(x2 - dx, y2 + dy);
         g.lineTo(x2, y2);
 
+        props.setBeamRotationOut(Math.atan2(dy, -dx) / Math.PI * 180);
+
         g.lineStyle(0,0xfa1f02,1);
 
         g.beginFill(0x333333, 1);
@@ -128,6 +130,18 @@ const Canvas = (props) => {
             window.removeEventListener('resize', updateDimension);
         })
       }, [screenSize])
+
+    useEffect(() => {
+        let x1 = laserPos.x;
+        let y1 = laserPos.y;
+
+        let x2 = screenSize.width - 60;
+        let y2 = screenSize.height / 2.0;
+
+        const angle = Math.atan2(y2 - y1, x2 - x1);
+
+        props.setBeamRotation(angle / Math.PI * 180);
+    })
 
     return (
         <div className="canvas">
