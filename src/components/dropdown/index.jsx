@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 
-const DropdownSelection = () => {
+const DropdownSelection = (props) => {
   const [selectedOption, setSelectedOption] = useState('');
 
   const handleSelectChange = (event) => {
+    props.setLightingModel(event.target.value);
     setSelectedOption(event.target.value);
   };
 
@@ -13,6 +14,7 @@ const DropdownSelection = () => {
       <select value={selectedOption} onChange={handleSelectChange}>
         <option value="lambertian">Lambertian</option>
         <option value="orennayar">Oren–Nayar</option>
+        <option value="cooktorrance">Cook-Torrance</option>
       </select>
     </div>
   );

@@ -1,5 +1,4 @@
 import { Stage, Graphics } from "@pixi/react";
-import { PI_2 } from "pixi.js";
 import { useState, useEffect, useCallback } from "react";
 
 const Canvas = (props) => {
@@ -65,24 +64,34 @@ const Canvas = (props) => {
             tr, br, bl, tl
           ];
       
-          // Draw the polygon
           g.lineStyle(0,0xfa1f02,1);
-          g.beginFill(0x5A5A5A); // Fill color (red)
-          g.moveTo(vertices[0].x, vertices[0].y); // Move to the first vertex
+          g.beginFill(0x5A5A5A);
+          g.moveTo(vertices[0].x, vertices[0].y);
           for (let i = 1; i < vertices.length; i++) {
-            g.lineTo(vertices[i].x, vertices[i].y); // Draw lines to the other vertices
+            g.lineTo(vertices[i].x, vertices[i].y);
           }
-          g.closePath(); // Close the polygon
-          g.endFill(); // End the fill
+          g.closePath();
+          g.endFill();
 
     }, [screenSize, props.wallRotation]);
 
     const drawPointer = useCallback((g) => {
         g.clear();
         g.lineStyle(8,0xfa1f02,1);
+
+        let offset = 60;
+        let offsetTop = (screenSize.height * props.wallRotation/45.0) / 2.0;
+        let offsetBottom = (screenSize.height * -props.wallRotation/45.0) / 2.0;
+        let tl = {x: -offset + screenSize.width - offsetTop, y: 0};
+        let bl = {x: -offset + screenSize.width - offsetBottom, y: screenSize.height};
         
+        // fancy function https://math.stackexchange.com/questions/274712/calculate-on-which-side-of-a-straight-line-is-a-given-point-located
+        let d = (mousePos.x - tl.x)*(bl.y - tl.y) - (mousePos.y - tl.y)*(bl.x - tl.x);
+
         if(isDraggingLaser || (mouseDown && distance(mousePos.x, mousePos.y, laserPos.x, laserPos.y) < 20.0)){
-            setLaserPos({x: mousePos.x, y: mousePos.y});
+            if (d<0.0) {
+                setLaserPos({ x: mousePos.x, y: mousePos.y });
+            }
             setIsDraggingLaser(true);
         }
 
@@ -101,8 +110,7 @@ const Canvas = (props) => {
         const wallRotationRad = ((props.wallRotation) * Math.PI) / 180;
         const newAngle = (angle + 2.0 * wallRotationRad);
 
-        console.log(angle / Math.PI * 180, props.wallRotation, newAngle / Math.PI * 180)
-
+        
         let dx = scale * Math.cos(newAngle);
         let dy = scale * Math.sin(newAngle);
 

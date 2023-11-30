@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import Canvas from './components/canvas'
 import Controls from './components/controls'
@@ -12,6 +10,7 @@ function App() {
 
   return (
     <div className='root'>
+      <p></p>
       <Controls setWallRotation={setWallRotation} wallRotation={wallRotation} beamRotation={beamRotation} beamRotationOut={beamRotationOut}></Controls>
       <Canvas wallRotation={wallRotation} setBeamRotation={setBeamRotation} setBeamRotationOut={setBeamRotationOut}></Canvas>
     </div>

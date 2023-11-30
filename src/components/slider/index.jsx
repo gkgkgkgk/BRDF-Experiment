@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-const Slider = ({ min, max, step, setValue }) => {
-    const [value, setV] = useState(0.0);
+const Slider = ({ min, max, step, setValue, text, defaultValue }) => {
+    const [value, setV] = useState(defaultValue);
 
     const handleChange = (e) => {
         setV(e.target.value);
@@ -10,7 +10,7 @@ const Slider = ({ min, max, step, setValue }) => {
 
     return (
         <div className='slider'>
-            <p>Wall angle: {value}°</p>
+            <p>{text + value}</p>
             <input 
                 type="range" 
                 min={min} 
